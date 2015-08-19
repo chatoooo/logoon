@@ -1,0 +1,36 @@
+{
+  "severities": ["TRACE","DEBUG","WARNING","ERROR","FATAL"],
+  "sinks": [
+    {
+      "name": "error",
+      "type": "file",
+      "filters": {
+        "severity": ">WARNING"
+      },
+      "format": "%time% %severity% %message%",
+      "options": {
+        "filename": "./error.log"
+      }
+    },
+    {
+      "name": "access",
+      "type": "file",
+      "filters": {
+        "tags": ["access"]
+      },
+      "format": "%date% - %message%",
+      "options": {
+        "filename": "./access.log"
+      }
+    },
+    {
+      "disabled": true,
+      "name": "debug",
+      "type": "console",
+      "filter": {
+        "tags": ["console"]
+      },
+      "format": "[%time%] [%severity%] %message%"
+    }
+  ]
+}
