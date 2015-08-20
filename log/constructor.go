@@ -9,7 +9,7 @@ import (
 	"os"
 )
 
-type SinkFactory func(*core.SinkConfig, []string) core.Sink
+type SinkFactory func(*core.SinkConfig, []string) (core.Sink, error)
 
 type Logger source.LogSource
 type FormatLogger source.LogSourceFormatted
