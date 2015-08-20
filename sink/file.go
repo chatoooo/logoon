@@ -22,7 +22,7 @@ func FileSinkFactory(config *core.SinkConfig, severity []string) (core.Sink, err
 	var filter core.SinkFilter = &StandardSinkFilter{MakeStringSeverityComparator(severity), nil}
 	filter.SetFilter(&config.ParsedFilter)
 	output := new(FileSinkOutput)
-	output.file, err = os.OpenFile(config.Output, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0666)
+	output.file, err = os.OpenFile(config.Options.(string), os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0666)
 	if err != nil {
 		return nil, err
 	}

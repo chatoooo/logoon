@@ -8,9 +8,9 @@ type SinkConfig struct {
 		Severity string   `json:"severity"`
 		Tags     []string `json:"tags"`
 	}
-	ParsedFilter Filter `json:"-"`
-	Format       string `json:"format"`
-	Output       string `json:"output"`
+	ParsedFilter Filter      `json:"-"`
+	Format       string      `json:"format"`
+	Options      interface{} `json:"options"`
 }
 
 type Config struct {

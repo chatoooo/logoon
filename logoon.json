@@ -9,7 +9,7 @@
         "tags": ["!access"]
       },
       "format": "%time% %severity% %message%",
-      "output": "./error.log"
+      "options": "./error.log"
     },
     {
       "name": "access",
@@ -18,7 +18,7 @@
         "tags": ["access"]
       },
       "format": "%time(2006-02-01 15:03:04.000)% - %message%",
-      "output": "./access.log"
+      "options": "./access.log"
     },
     {
       "disabled": true,
