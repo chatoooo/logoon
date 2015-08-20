@@ -21,6 +21,10 @@ func (this TaggedLogSource) Debug(message string) {
 	this.dispatcher.Log(core.CreateTaggedLogMessage("DEBUG", message, this.tags))
 }
 
+func (this TaggedLogSource) Info(message string) {
+	this.dispatcher.Log(core.CreateTaggedLogMessage("INFO", message, this.tags))
+}
+
 func (this TaggedLogSource) Warning(message string) {
 	this.dispatcher.Log(core.CreateTaggedLogMessage("WARNING", message, this.tags))
 }

@@ -9,8 +9,10 @@ import (
 	"os"
 )
 
-type SinkFactory func(interface{}) core.Sink
+type SinkFactory func(*core.SinkConfig, []string) core.Sink
+
 type Logger source.LogSource
+type FormatLogger source.LogSourceFormatted
 
 var sinkFactories map[string]SinkFactory
 var globalDispatcher core.Dispatcher
@@ -25,6 +27,7 @@ func CreateDispatcherFromFile(configfile string) (core.Dispatcher, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer file.Close()
 	return CreateDispatcherFromReader(file)
 }
 

@@ -20,6 +20,10 @@ func (this SimpleLogSource) Debug(message string) {
 	this.dispatcher.Log(core.CreateBasicLogMessage("DEBUG", message))
 }
 
+func (this SimpleLogSource) Info(message string) {
+	this.dispatcher.Log(core.CreateBasicLogMessage("INFO", message))
+}
+
 func (this SimpleLogSource) Warning(message string) {
 	this.dispatcher.Log(core.CreateBasicLogMessage("WARNING", message))
 }

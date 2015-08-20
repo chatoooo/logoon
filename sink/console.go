@@ -1,7 +1,22 @@
 package sink
 
-import "github.com/chatoooo/logoon/core"
+import (
+	"fmt"
+	"github.com/chatoooo/logoon/core"
+)
 
-func ConsoleSinkFactory(opts interface{}) core.Sink {
-	return nil
+type ConsoleSinkOutput struct{}
+
+func (this *ConsoleSinkOutput) Write(value string) {
+	fmt.Println(value)
+}
+
+func ConsoleSinkFactory(config *core.SinkConfig, severity []string) core.Sink {
+	var formatter core.SinkFormatter = new(StandardSinkFormatter)
+	formatter.SetFormat(config.Format)
+
+	var filter core.SinkFilter = &StandardSinkFilter{MakeStringSeverityComparator(severity), nil}
+	filter.SetFilter(&config.ParsedFilter)
+	output := new(ConsoleSinkOutput)
+	return BuildStandardSink(config.Name, filter, formatter, output)
 }

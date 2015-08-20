@@ -4,18 +4,36 @@ const (
 	FILTER_CMP_EQ = iota
 	FILTER_CMP_GT
 	FILTER_CMP_LT
+	FILTER_CMP_GE
+	FILTER_CMP_NONE
 )
 
+type FilterSeverity struct {
+	Level string
+	CmpOp int
+}
+
 type Filter struct {
-	Severity struct {
-		Severity string
-		CmpOp    int
-	}
-	Tags []string
+	Severity    FilterSeverity
+	Tags        []string
+	TagsExclude bool
 }
 
 type Sink interface {
-	SetFilter(*Filter)
 	GetName() string
-	Run(chan LogMessage, SeverityComparator)
+	Log(LogMessage)
+}
+
+type SinkFilter interface {
+	SetFilter(*Filter)
+	ShouldOutput(LogMessage) bool
+}
+
+type SinkFormatter interface {
+	SetFormat(string)
+	GetFormattedMessage(LogMessage) string
+}
+
+type SinkOutput interface {
+	Write(string)
 }

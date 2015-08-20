@@ -8,14 +8,12 @@ type Dispatcher interface {
 type LogDispatcher struct {
 	sinks        map[string]Sink
 	sinkChannels map[string]chan LogMessage
-	comparator   SeverityComparator
 }
 
-func CreateDispatcher(severityOrder []string) Dispatcher {
+func CreateDispatcher() Dispatcher {
 	return &LogDispatcher{
 		sinks:        make(map[string]Sink),
 		sinkChannels: make(map[string]chan LogMessage),
-		comparator:   MakeStringSeverityComparator(severityOrder),
 	}
 }
 
@@ -25,10 +23,18 @@ func (this LogDispatcher) Log(message LogMessage) {
 	}
 }
 
+func sinkRunner(s Sink, ch <-chan LogMessage) {
+	var msg LogMessage
+	for {
+		msg = <-ch
+		s.Log(msg)
+	}
+}
+
 func (this LogDispatcher) AddSink(s Sink) {
 	var name string = s.GetName()
-	var channel = make(chan LogMessage)
+	var channel = make(chan LogMessage, 10)
 	this.sinks[name] = s
 	this.sinkChannels[name] = channel
-	go s.Run(channel, this.comparator)
+	go sinkRunner(s, channel)
 }

@@ -4,20 +4,29 @@ import (
 	"github.com/chatoooo/logoon/core"
 )
 
-type SinkBase struct {
-	Name   string
-	Filter *core.Filter
+type StandardSink struct {
+	Filter    core.SinkFilter
+	Formatter core.SinkFormatter
+	Output    core.SinkOutput
+	Name      string
 }
 
-func (this SinkBase) GetName() string {
+func BuildStandardSink(name string, filter core.SinkFilter, format core.SinkFormatter, output core.SinkOutput) core.Sink {
+	return &StandardSink{
+		Filter:    filter,
+		Formatter: format,
+		Output:    output,
+		Name:      name,
+	}
+}
+
+func (this StandardSink) GetName() string {
 	return this.Name
 }
 
-func (this SinkBase) ShouldOutput(message core.LogMessage) bool {
-	var tagsOK, severityOK bool
-	if this.Filter == nil {
-		return true
+func (this StandardSink) Log(msg core.LogMessage) {
+	if this.Filter.ShouldOutput(msg) {
+		var logMessage string = this.Formatter.GetFormattedMessage(msg)
+		this.Output.Write(logMessage)
 	}
-
-	return tagsOK && severityOK
 }

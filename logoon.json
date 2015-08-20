@@ -1,16 +1,15 @@
 {
-  "severities": ["TRACE","DEBUG","WARNING","ERROR","FATAL"],
+  "severities": ["TRACE","DEBUG","INFO","WARNING","ERROR","FATAL"],
   "sinks": [
     {
       "name": "error",
       "type": "file",
       "filters": {
-        "severity": ">WARNING"
+        "severity": "ERROR",
+        "tags": ["!access"]
       },
       "format": "%time% %severity% %message%",
-      "options": {
-        "filename": "./error.log"
-      }
+      "output": "./error.log"
     },
     {
       "name": "access",
@@ -18,10 +17,8 @@
       "filters": {
         "tags": ["access"]
       },
-      "format": "%date% - %message%",
-      "options": {
-        "filename": "./access.log"
-      }
+      "format": "%time(2006-02-01 15:03:04.000)% - %message%",
+      "output": "./access.log"
     },
     {
       "disabled": true,
