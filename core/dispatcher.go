@@ -19,14 +19,16 @@ func CreateDispatcher() Dispatcher {
 
 func (this LogDispatcher) Log(message LogMessage) {
 	for _, v := range this.sinkChannels {
+		//fmt.Printf("Sending Message: %#v\nToChannel: %#v\n\n", message, v)
 		v <- message
 	}
 }
 
 func sinkRunner(s Sink, ch <-chan LogMessage) {
 	var msg LogMessage
-	for {
-		msg = <-ch
+	for{
+		msg = <- ch
+		//fmt.Printf("Got Message: %#v\n\n%#v\n\n", msg, s)
 		s.Log(msg)
 	}
 }

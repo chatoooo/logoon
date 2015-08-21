@@ -11,7 +11,7 @@ func TestFilterSeverity(t *testing.T) {
 
 	filter := StandardSinkFilter{
 		severityComparator: MakeStringSeverityComparator([]string{"TRACE", "DEBUG", "INFO", "WARNING", "ERROR", "FATAL"}),
-		filter: &core.Filter{
+		filter: core.Filter{
 			Severity: core.FilterSeverity{
 				CmpOp: core.FILTER_CMP_GE,
 				Level: "INFO",
@@ -33,7 +33,7 @@ func TestFilterTags(t *testing.T) {
 
 	filter := StandardSinkFilter{
 		severityComparator: MakeStringSeverityComparator([]string{"TRACE", "DEBUG", "INFO", "WARNING", "ERROR", "FATAL"}),
-		filter: &core.Filter{
+		filter: core.Filter{
 			Severity: core.FilterSeverity{
 				CmpOp: core.FILTER_CMP_NONE,
 				Level: "",
@@ -55,7 +55,7 @@ func TestFilterTagsExclude(t *testing.T) {
 
 	filter := StandardSinkFilter{
 		severityComparator: MakeStringSeverityComparator([]string{"TRACE", "DEBUG", "INFO", "WARNING", "ERROR", "FATAL"}),
-		filter: &core.Filter{
+		filter: core.Filter{
 			Severity: core.FilterSeverity{
 				CmpOp: core.FILTER_CMP_NONE,
 				Level: "",
@@ -77,7 +77,7 @@ func TestFilterSeverityTags(t *testing.T) {
 
 	filter := StandardSinkFilter{
 		severityComparator: MakeStringSeverityComparator([]string{"TRACE", "DEBUG", "INFO", "WARNING", "ERROR", "FATAL"}),
-		filter: &core.Filter{
+		filter: core.Filter{
 			Severity: core.FilterSeverity{
 				CmpOp: core.FILTER_CMP_GT,
 				Level: "INFO",
@@ -99,7 +99,7 @@ func TestFilterSeverityTagsExclude(t *testing.T) {
 
 	filter := StandardSinkFilter{
 		severityComparator: MakeStringSeverityComparator([]string{"TRACE", "DEBUG", "INFO", "WARNING", "ERROR", "FATAL"}),
-		filter: &core.Filter{
+		filter: core.Filter{
 			Severity: core.FilterSeverity{
 				CmpOp: core.FILTER_CMP_GT,
 				Level: "INFO",

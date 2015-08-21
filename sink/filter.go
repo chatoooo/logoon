@@ -1,14 +1,18 @@
 package sink
 
-import "github.com/chatoooo/logoon/core"
+import (
+	"github.com/chatoooo/logoon/core"
+	//"fmt"
+)
 
 type StandardSinkFilter struct {
 	severityComparator SeverityComparator
-	filter             *core.Filter
+	filter             core.Filter
 }
 
-func (this *StandardSinkFilter) SetFilter(filter *core.Filter) {
+func (this *StandardSinkFilter) SetFilter(filter core.Filter) {
 	this.filter = filter
+	//fmt.Printf("Setting filter: %#v,\n%#v\n\n", filter, this.filter)
 }
 
 func (this *StandardSinkFilter) shouldSeverity(msg core.LogMessage) bool {
@@ -47,9 +51,14 @@ func (this *StandardSinkFilter) ShouldOutput(msg core.LogMessage) bool {
 	var severity, tags bool
 
 	severity = this.shouldSeverity(msg)
+	if !severity {
+		return severity
+	}
+
 	tags = this.shouldTags(msg)
 	if this.filter.TagsExclude {
 		tags = !tags
 	}
-	return severity && tags
+	//fmt.Printf("ShouldOutput: severity:%v, tags:%v, filter: %#v\n\n", severity, tags, this.filter)
+	return tags
 }

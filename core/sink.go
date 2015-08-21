@@ -1,11 +1,11 @@
 package core
 
 const (
-	FILTER_CMP_EQ = iota
+	FILTER_CMP_NONE = iota
 	FILTER_CMP_GT
 	FILTER_CMP_LT
 	FILTER_CMP_GE
-	FILTER_CMP_NONE
+	FILTER_CMP_EQ
 )
 
 type FilterSeverity struct {
@@ -25,7 +25,7 @@ type Sink interface {
 }
 
 type SinkFilter interface {
-	SetFilter(*Filter)
+	SetFilter(Filter)
 	ShouldOutput(LogMessage) bool
 }
 
